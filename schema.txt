@@ -1,0 +1,64 @@
+Instagram Thrift Store
+  Product {
+  ProductID int [pk, increment]
+  Name varchar
+  Description text
+  Category varchar  
+  
+  BasePrice decimal
+  IsHandmade boolean
+}
+
+ InventoryItem {
+  ItemID int [pk, increment]
+  ProductID int [ref: > Product.ProductID]
+  Size varchar
+  Color varchar
+  Condition varchar
+  QuantityAvailable int
+  IsUnique boolean  
+  CreatedDate datetime
+}
+
+ Customer {
+  CustomerID int [pk, increment]
+  Name varchar
+  PhoneNumber varchar
+  InstagramHandle varchar
+  Address text
+}
+Orders {
+  OrderID int [pk, increment]
+  CustomerID int [ref: > Customer.CustomerID]
+  OrderDate datetime
+  TotalAmount decimal
+  PaymentStatus varchar
+  ShippingStatus varchar
+}
+
+ OrderItem {
+  OrderItemID int [pk, increment]
+  OrderID int [ref: > Orders.OrderID]
+  ItemID int [ref: > InventoryItem.ItemID]
+  Quantity int
+  PriceAtPurchase decimal
+}
+
+Payment {
+  PaymentID int [pk, increment]
+  OrderID int [ref: > Orders.OrderID]
+  PaymentMethod varchar
+  Amount decimal
+  PaymentDate datetime
+  PaymentStatus varchar
+}
+
+Shipment {
+  ShipmentID int [pk, increment]
+  OrderID int [ref: > Orders.OrderID]
+  CourierName varchar
+  TrackingNumber varchar
+  ShippedDate datetime
+  DeliveredDate datetime
+  Status varchar
+}
